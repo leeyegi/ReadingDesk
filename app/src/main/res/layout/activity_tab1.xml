@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainTab1">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="사용시간"
+            android:textSize="22dp" />
+
+        <TextView
+            android:id="@+id/timeCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="10dp"
+            android:layout_gravity="center"
+            android:text="00:00"
+            android:textColor="#009688"
+            android:textSize="40dp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/button_start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_bg_ex"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="8dp"
+                android:text="Start" />
+
+            <Button
+                android:id="@+id/button_pause"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_bg_ex"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_marginTop="8dp"
+                android:text="Pause"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="10dp"
+            android:text="조명 설정"
+            android:textSize="22dp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/button_onoff"
+                android:layout_width="104dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/btn_bg_ex"
+                android:textColor="@color/colorPrimaryDark"
+                android:text="ON / OFF"/>
+
+            <Button
+                android:id="@+id/button_reading"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_bg_ex"
+                android:textColor="@color/colorPrimaryDark"
+                android:text="독 서"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="50dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/button_literature"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_bg_ex"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_marginRight="20dp"
+                android:text="문학" />
+
+            <Button
+                android:id="@+id/button_math"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_bg_ex"
+                android:textColor="@color/colorPrimaryDark"
+                android:text="과학 / 수학"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="50dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/button_service1"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/btn_bg_ex"
+            android:textColor="@color/colorPrimaryDark"
+            android:text="공부 꿀팁"/>
+
+        <Button
+            android:id="@+id/button_service2"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@drawable/btn_bg_ex"
+            android:textColor="@color/colorPrimaryDark"
+            android:text="바른 자세 꿀팁"/>
+
+    </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="200dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/btn_bg_ex"
+                android:textColor="@color/colorPrimaryDark"
+                android:text="공부 꿀팁"/>
+
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@drawable/btn_bg_ex"
+                android:textColor="@color/colorPrimaryDark"
+                android:text="공부 꿀팁"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>
+

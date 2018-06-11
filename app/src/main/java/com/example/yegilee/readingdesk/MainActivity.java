@@ -16,7 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import com.example.yegilee.readingdesk.MainTab1;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     //탭 기능 - 변수선언
     private PagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
+
 
     //블루투스
     TextView mConnectionStatus;
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         //탭 기능
         mSectionsPagerAdapter = new PagerAdapter(getSupportFragmentManager());
@@ -140,6 +142,8 @@ public class MainActivity extends AppCompatActivity {
                 // This is a blocking call and will only return on a
                 // successful connection or an exception
                 mBluetoothSocket.connect();
+
+                ((MainTab1)MainTab1.mContext).start_timer();
             } catch (IOException e) {
                 // Close the socket
                 try {
@@ -369,7 +373,7 @@ public class MainActivity extends AppCompatActivity {
                 dialog.dismiss();
                 if ( isConnectionError  ) {
                     isConnectionError = false;
-                    finish();
+                    //finish();
                 }
             }
         });
@@ -387,7 +391,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-                finish();
+                //finish();
             }
         });
         builder.create().show();

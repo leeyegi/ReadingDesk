@@ -21,6 +21,8 @@ public class MainTab1 extends Fragment{
 
     View rootView;
 
+    public static MainTab1 mContext;
+
     //서비스 버튼 - 변수선언
     private Button button_service1;
     private Button button_service2;
@@ -45,6 +47,8 @@ public class MainTab1 extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.activity_tab1, container, false);
 
+        mContext=this;
+
         //서비스 버튼 - 레이아웃과 연결
         button_service1=(Button)rootView.findViewById(R.id.button_service1);
         button_service2=(Button)rootView.findViewById(R.id.button_service2);
@@ -67,13 +71,13 @@ public class MainTab1 extends Fragment{
         timeCount = (TextView)rootView.findViewById(R.id.timeCount);
         //listview_timelap = (ListView)rootView.findViewById(R.id.listview_timelap);
 
-        button_start = (Button)rootView.findViewById(R.id.button_start);
-        button_pause = (Button)rootView.findViewById(R.id.button_pause);
+        //button_start = (Button)rootView.findViewById(R.id.button_start);
+        //button_pause = (Button)rootView.findViewById(R.id.button_pause);
         //button_reset = (Button)rootView.findViewById(R.id.button_restart);
         //button_lap = (Button)rootView.findViewById(R.id.button_lap) ;
 
-        button_start.setOnClickListener(button_startListener);
-        button_pause.setOnClickListener(button_pauseListener);
+        //button_start.setOnClickListener(button_startListener);
+        //button_pause.setOnClickListener(button_pauseListener);
         //button_reset.setOnClickListener(button_resetListner);
         //button_lap.setOnClickListener(button_lapListener);
 
@@ -109,6 +113,7 @@ public class MainTab1 extends Fragment{
 
 
     //사용시간 설정 - 버튼 리스너 메소드
+    /*
     View.OnClickListener button_startListener=new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -129,6 +134,18 @@ public class MainTab1 extends Fragment{
             //button_reset.setEnabled(true);
         }
     };
+    */
+
+    public void start_timer(){
+        StartTime = SystemClock.uptimeMillis();
+        handler.postDelayed(runnable, 0);
+    }
+
+    public void pause_timer(){
+        TimeBuff += MillisecondTime;
+
+        handler.removeCallbacks(runnable);
+    }
 /*
     View.OnClickListener button_resetListner=new View.OnClickListener() {
         @Override

@@ -30,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
     private PagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
 
+    public static MainActivity mContext;
+
 
     //블루투스
     TextView mConnectionStatus;
@@ -37,11 +39,11 @@ public class MainActivity extends AppCompatActivity {
     //블루투스가 현재 연결가능한지 판단
     private final int REQUEST_BLUETOOTH_ENABLE = 1;
 
-    ConnectedTask mConnectedTask = null;            //블루투스 연결된후 수행 클래스 객체
-    static BluetoothAdapter mBluetoothAdapter;          //현재의 상태를 알 수 있는 블루투스 어댑터
-    private String mConnectedDeviceName = null;     //연결된 장치의 이름을 표시
-    private ArrayAdapter<String> mConversationArrayAdapter; //다른 장치와 통신
-    static boolean isConnectionError = false;                   //현재의 블루투스 연결상태의 에러여부
+    ConnectedTask mConnectedTask = null;                        //블루투스 연결된후 수행 클래스 객체
+    static BluetoothAdapter mBluetoothAdapter;                   //현재의 상태를 알 수 있는 블루투스 어댑터
+    private String mConnectedDeviceName = null;              //연결된 장치의 이름을 표시
+    private ArrayAdapter<String> mConversationArrayAdapter;  //다른 장치와 통신
+    static boolean isConnectionError = false;                  //현재의 블루투스 연결상태의 에러여부
     private static final String TAG = "BluetoothClient";
     String surrent_status="";
 
@@ -50,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        mContext=this;
 
         //탭 기능
         mSectionsPagerAdapter = new PagerAdapter(getSupportFragmentManager());
@@ -70,8 +72,9 @@ public class MainActivity extends AppCompatActivity {
                 android.R.layout.simple_list_item_1 );
         mMessageListview.setAdapter(mConversationArrayAdapter);
 
-        Log.d( TAG, "Initalizing Bluetooth adapter...");
 
+
+        Log.d( TAG, "Initalizing Bluetooth adapter...");
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (mBluetoothAdapter == null) {
             showErrorDialog("This device is not implement Bluetooth.");
@@ -87,6 +90,8 @@ public class MainActivity extends AppCompatActivity {
 
             showPairedDevicesListDialog();
         }
+
+
     }
 
     //----------------------------------------------------------------------------
@@ -99,6 +104,8 @@ public class MainActivity extends AppCompatActivity {
         if ( mConnectedTask != null ) {
 
             mConnectedTask.cancel(true);
+            Log.e("connect","connect fail");
+
         }
     }
 //------------------------------------------------------------------------------------------
@@ -112,6 +119,8 @@ public class MainActivity extends AppCompatActivity {
 
         //생성자 메소드
         ConnectTask(BluetoothDevice bluetoothDevice) {
+
+
             mBluetoothDevice = bluetoothDevice;
             mConnectedDeviceName = bluetoothDevice.getName();
 
@@ -127,6 +136,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             mConnectionStatus.setText("connecting...");
+
         }
 
 
@@ -143,7 +153,12 @@ public class MainActivity extends AppCompatActivity {
                 // successful connection or an exception
                 mBluetoothSocket.connect();
 
+                Log.e("connection","log ");
+
+                //블루투스가 연결이 되면 timer가 올라감
+                Log.e("connect check","connect ok");
                 ((MainTab1)MainTab1.mContext).start_timer();
+
             } catch (IOException e) {
                 // Close the socket
                 try {
@@ -190,6 +205,7 @@ public class MainActivity extends AppCompatActivity {
         private InputStream mInputStream = null;
         private OutputStream mOutputStream = null;
         private BluetoothSocket mBluetoothSocket = null;
+        boolean check_blt_status=true;
 
         //생성자
         ConnectedTask(BluetoothSocket socket){
@@ -214,46 +230,60 @@ public class MainActivity extends AppCompatActivity {
             byte [] readBuffer = new byte[1024];
             int readBufferPosition = 0;
 
+            while(true) {
 
-            while (true) {
+                if(check_blt_status==false){
+                    if (mBluetoothAdapter.isEnabled()) {
+                        Log.e("connect status", "turning on");
+                        publishProgress("reconnect");
+                    }
+                }
 
-                if ( isCancelled() ) return false;
 
-                try {
+                while (check_blt_status == true) {
 
-                    int bytesAvailable = mInputStream.available();
+                    if (!mBluetoothAdapter.isEnabled()) {
+                        Log.e("connect status", "turning off");
+                        check_blt_status = false;
+                        ((MainTab1)MainTab1.mContext).pause_timer();
+                    }
 
-                    if(bytesAvailable > 0) {
+                    if (isCancelled()) return false;
 
-                        byte[] packetBytes = new byte[bytesAvailable];
 
-                        mInputStream.read(packetBytes);
+                    try {
 
-                        for(int i=0;i<bytesAvailable;i++) {
+                        int bytesAvailable = mInputStream.available();
 
-                            byte b = packetBytes[i];
-                            if(b == '\n')
-                            {
-                                byte[] encodedBytes = new byte[readBufferPosition];
-                                System.arraycopy(readBuffer, 0, encodedBytes, 0,
-                                        encodedBytes.length);
-                                String recvMessage = new String(encodedBytes, "UTF-8");
+                        if (bytesAvailable > 0) {
 
-                                readBufferPosition = 0;
+                            byte[] packetBytes = new byte[bytesAvailable];
 
-                                Log.d(TAG, "recv message: " + recvMessage);
-                                publishProgress(recvMessage);
-                            }
-                            else
-                            {
-                                readBuffer[readBufferPosition++] = b;
+                            mInputStream.read(packetBytes);
+
+                            for (int i = 0; i < bytesAvailable; i++) {
+
+                                byte b = packetBytes[i];
+                                if (b == '\n') {
+                                    byte[] encodedBytes = new byte[readBufferPosition];
+                                    System.arraycopy(readBuffer, 0, encodedBytes, 0,
+                                            encodedBytes.length);
+                                    String recvMessage = new String(encodedBytes, "UTF-8");
+
+                                    readBufferPosition = 0;
+
+                                    Log.e(TAG, "recv message: " + recvMessage);
+                                    publishProgress(recvMessage);
+                                } else {
+                                    readBuffer[readBufferPosition++] = b;
+                                }
                             }
                         }
-                    }
-                } catch (IOException e) {
+                    } catch (IOException e) {
 
-                    Log.e(TAG, "disconnected", e);
-                    return false;
+                        Log.e(TAG, "disconnected", e);
+                        return false;
+                    }
                 }
             }
 
@@ -263,8 +293,17 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onProgressUpdate(String... recvMessage) {
             mConversationArrayAdapter.insert(mConnectedDeviceName + ": " + recvMessage[0], 0);
+            //받은 메세지로 타이머 상태 결정
             Toast.makeText(getApplicationContext(), recvMessage[0], Toast.LENGTH_LONG).show();
-            surrent_status=recvMessage[0];
+            Log.e("text", recvMessage[0]);
+            String str_go="go";
+            String str_stop="stop";
+            if(str_go.matches(recvMessage[0])==true){
+                ((MainTab1)MainTab1.mContext).start_timer();
+            }
+            if(str_stop.matches(recvMessage[0])==true){
+                ((MainTab1)MainTab1.mContext).pause_timer();
+            }
         }
 
         //디바이스 연결이 되지 않았을째 화면에 표시되는 포스트 메소드
@@ -331,6 +370,9 @@ public class MainActivity extends AppCompatActivity {
     {
         Set<BluetoothDevice> devices = mBluetoothAdapter.getBondedDevices();
         final BluetoothDevice[] pairedDevices = devices.toArray(new BluetoothDevice[0]);
+
+        Log.e("connection","log1 ");
+
 
         if ( pairedDevices.length == 0 ){
             showQuitDialog( "No devices have been paired.\n"
@@ -418,6 +460,8 @@ public class MainActivity extends AppCompatActivity {
             }
             if(resultCode == RESULT_CANCELED){
                 showQuitDialog( "You need to enable bluetooth");
+
+
             }
         }
     }

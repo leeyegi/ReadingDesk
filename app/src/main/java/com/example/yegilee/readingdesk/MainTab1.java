@@ -17,9 +17,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static java.lang.Boolean.TRUE;
+
 public class MainTab1 extends Fragment{
 
     View rootView;
+
+    //start와 pause를 도와줄 flag
+    public int start_pause_flag=0;
 
     public static MainTab1 mContext;
 
@@ -34,11 +39,11 @@ public class MainTab1 extends Fragment{
     private Button button_math;
 
     //사용시간 설정 - 변수 선언
-    TextView timeCount ;
+    public TextView timeCount ;
     Button button_start, button_pause, button_reset, button_lap ;
     long MillisecondTime, StartTime, TimeBuff, UpdateTime = 0L ;
     Handler handler;
-    int Seconds, Minutes, MilliSeconds ;
+    int Seconds, Minutes, MilliSeconds, Hour;
     ListView listview_timelap ;
     String[] ListElements = new String[] {  };
     List<String> ListElementsArrayList ;
@@ -137,14 +142,25 @@ public class MainTab1 extends Fragment{
     */
 
     public void start_timer(){
-        StartTime = SystemClock.uptimeMillis();
-        handler.postDelayed(runnable, 0);
+
+        //flag가 0이면 현재 타이머가 작동하지않은것으로 판단하여 타이머 start 수행
+        if(start_pause_flag==0) {
+            StartTime = SystemClock.uptimeMillis();
+            handler.postDelayed(runnable, 0);
+
+            start_pause_flag=1;
+        }
     }
 
-    public void pause_timer(){
-        TimeBuff += MillisecondTime;
+    public void pause_timer() {
 
-        handler.removeCallbacks(runnable);
+        if (start_pause_flag == 1) {
+            TimeBuff += MillisecondTime;
+            handler.removeCallbacks(runnable);
+
+
+            start_pause_flag=0;
+        }
     }
 /*
     View.OnClickListener button_resetListner=new View.OnClickListener() {
@@ -193,12 +209,17 @@ public class MainTab1 extends Fragment{
 
             MilliSeconds = (int) (UpdateTime % 1000);
 
+            Hour=Minutes/60;
+
+            Minutes=Minutes%60;
+
             timeCount.setText("" + Minutes + ":"+String.format("%02d", Seconds));
 
             handler.postDelayed(this, 0);
         }
 
     };
+
 
     //조명 설정 - 버튼 리스너 메소드
     View.OnClickListener button_onoffListener = new View.OnClickListener() {

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ public class MainTab1 extends Fragment{
     public int start_pause_flag=0;
 
     public static MainTab1 mContext;
+    private SM_Database db;
 
     //서비스 버튼 - 변수선언
     private Button button_service1;
@@ -53,6 +55,8 @@ public class MainTab1 extends Fragment{
         rootView = inflater.inflate(R.layout.activity_tab1, container, false);
 
         mContext=this;
+        db=new SM_Database(getActivity());
+
 
         //서비스 버튼 - 레이아웃과 연결
         button_service1=(Button)rootView.findViewById(R.id.button_service1);
@@ -162,6 +166,16 @@ public class MainTab1 extends Fragment{
             start_pause_flag=0;
         }
     }
+
+    public void save_timer() {
+
+        String save_time=String.valueOf(timeCount.getText());
+        db.INSERT(save_time);
+        Log.e("db", "insert ok");
+
+        pause_timer();
+    }
+
 /*
     View.OnClickListener button_resetListner=new View.OnClickListener() {
         @Override

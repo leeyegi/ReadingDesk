@@ -119,7 +119,7 @@
             android:layout_height="100dp"
             android:background="@drawable/btn_bg_ex"
             android:textColor="@color/colorPrimaryDark"
-            android:text="바른 자세 꿀팁"/>
+            android:text="시험공부 팁!"/>
 
     </LinearLayout>
 
@@ -131,19 +131,21 @@
             android:orientation="horizontal">
 
             <Button
+                android:id="@+id/button_service3"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginRight="20dp"
                 android:background="@drawable/btn_bg_ex"
                 android:textColor="@color/colorPrimaryDark"
-                android:text="공부 꿀팁"/>
+                android:text="바른자세 공부법"/>
 
             <Button
+                android:id="@+id/button_service4"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:background="@drawable/btn_bg_ex"
                 android:textColor="@color/colorPrimaryDark"
-                android:text="공부 꿀팁"/>
+                android:text="초! 집중 도움 팁"/>
 
         </LinearLayout>
 

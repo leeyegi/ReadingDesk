@@ -82,15 +82,18 @@ public class MainTab2 extends Fragment{
 
 
     public void AddValuesToBarDataLabel(){
-        /*
+
         final ArrayList<ReadingDesk> arReadingDesk=db.query();
 
-
-        for(int idx=0;idx<5;idx++){
-                barEntries.add(new BarEntry(Float.parseFloat(arReadingDesk.get(idx).getTimer_data()), idx));
+        for(int idx=0;idx<1;idx++){
+                String timer_data=arReadingDesk.get(idx).getTimer_data();
+                int index=timer_data.indexOf(":");
+                timer_data=timer_data.substring(0,index);
+                Log.e("a",timer_data);
+                barEntries.add(new BarEntry(Float.parseFloat(timer_data), idx));
                 barEntityLabels.add(arReadingDesk.get(idx).getTime());
         }
-        */
+
         /*
         barEntries.add(new BarEntry(2f, 0));
         barEntries.add(new BarEntry(4f, 1));

@@ -59,8 +59,43 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="service1"
-                android:textSize="20dp"/>
+                android:text="공부 꿀팁!"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textStyle="bold"
+                android:layout_marginBottom="20dp"
+                android:textSize="25dp"/>
+
+            <ImageView
+                android:background="@drawable/studytip2"
+                android:layout_width="330dp"
+                android:layout_height="290dp"
+                android:layout_marginBottom="20dp"
+                android:layout_gravity="center_horizontal"/>
+            <ImageView
+                android:background="@drawable/studytip3"
+                android:layout_width="330dp"
+                android:layout_height="290dp"
+                android:layout_marginBottom="20dp"
+                android:layout_gravity="center_horizontal"/>
+            <ImageView
+                android:background="@drawable/studytip4"
+                android:layout_width="330dp"
+                android:layout_height="290dp"
+                android:layout_marginBottom="20dp"
+                android:layout_gravity="center_horizontal"/>
+            <ImageView
+                android:background="@drawable/studytip5"
+                android:layout_width="330dp"
+                android:layout_height="290dp"
+                android:layout_marginBottom="100dp"
+                android:layout_gravity="center_horizontal"/>
+            <ImageView
+                android:background="@drawable/studytip6"
+                android:layout_width="330dp"
+                android:layout_height="420dp"
+                android:layout_marginBottom="100dp"
+                android:layout_gravity="center_horizontal"/>
         </LinearLayout>
 
     </ScrollView>

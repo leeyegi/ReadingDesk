@@ -59,8 +59,37 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="service2"
-                android:textSize="20dp"/>
+                android:text="시험공부 팁!"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textStyle="bold"
+                android:layout_marginBottom="20dp"
+                android:textSize="25dp"/>
+
+            <ImageView
+                android:background="@drawable/tip1"
+                android:layout_width="330dp"
+                android:layout_height="330dp"
+                android:layout_marginBottom="20dp"
+                android:layout_gravity="center_horizontal"/>
+            <ImageView
+                android:background="@drawable/tip2"
+                android:layout_width="330dp"
+                android:layout_height="330dp"
+                android:layout_marginBottom="20dp"
+                android:layout_gravity="center_horizontal"/>
+            <ImageView
+                android:background="@drawable/tip3"
+                android:layout_width="330dp"
+                android:layout_height="330dp"
+                android:layout_marginBottom="20dp"
+                android:layout_gravity="center_horizontal"/>
+            <ImageView
+                android:background="@drawable/tip4"
+                android:layout_width="330dp"
+                android:layout_height="330dp"
+                android:layout_marginBottom="100dp"
+                android:layout_gravity="center_horizontal"/>
         </LinearLayout>
 
     </ScrollView>

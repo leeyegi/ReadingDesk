@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     TextView mConnectionStatus;
 
     //블루투스가 현재 연결가능한지 판단
-    private final int REQUEST_BLUETOOTH_ENABLE = 1;
+    private final int REQUEST_BLUETOOTH_ENABLE = 2;
 
     ConnectedTask mConnectedTask = null;                        //블루투스 연결된후 수행 클래스 객체
     static BluetoothAdapter mBluetoothAdapter;                   //현재의 상태를 알 수 있는 블루투스 어댑터
@@ -245,7 +245,7 @@ public class MainActivity extends AppCompatActivity {
                     if (!mBluetoothAdapter.isEnabled()) {
                         Log.e("connect status", "turning off");
                         check_blt_status = false;
-                        ((MainTab1)MainTab1.mContext).pause_timer();
+                        ((MainTab1)MainTab1.mContext).save_timer();
                     }
 
                     if (isCancelled()) return false;
@@ -264,7 +264,7 @@ public class MainActivity extends AppCompatActivity {
                             for (int i = 0; i < bytesAvailable; i++) {
 
                                 byte b = packetBytes[i];
-                                if (b == '\n') {
+                                if (b == '*') {
                                     byte[] encodedBytes = new byte[readBufferPosition];
                                     System.arraycopy(readBuffer, 0, encodedBytes, 0,
                                             encodedBytes.length);
@@ -296,14 +296,21 @@ public class MainActivity extends AppCompatActivity {
             //받은 메세지로 타이머 상태 결정
             Toast.makeText(getApplicationContext(), recvMessage[0], Toast.LENGTH_LONG).show();
             Log.e("text", recvMessage[0]);
-            String str_go="go";
-            String str_stop="stop";
-            if(str_go.matches(recvMessage[0])==true){
+
+            boolean str_go=recvMessage[0].contains("go");
+            Log.e("str_go", String.valueOf(str_go));
+
+            if(str_go){
                 ((MainTab1)MainTab1.mContext).start_timer();
             }
-            if(str_stop.matches(recvMessage[0])==true){
-                ((MainTab1)MainTab1.mContext).pause_timer();
+
+            boolean str_stop=recvMessage[0].contains("stop");
+            Log.e("str_stop", String.valueOf(str_stop));
+
+            if(str_stop){
+                //((MainTab1)MainTab1.mContext).pause_timer();
             }
+
         }
 
         //디바이스 연결이 되지 않았을째 화면에 표시되는 포스트 메소드

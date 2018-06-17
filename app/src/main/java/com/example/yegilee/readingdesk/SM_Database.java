@@ -120,7 +120,7 @@ public class SM_Database {
         Cursor cursor;
 
         StringBuffer sb = new StringBuffer();
-        sb.append("SELECT * FROM ").append(DATABASE_TABLE_NAME).append(" ORDER BY id DESC");
+        sb.append("SELECT * FROM ").append(DATABASE_TABLE_NAME).append(" ORDER BY id DESC LIMIT 5");
 
         cursor = db.rawQuery(sb.toString(), null);
 

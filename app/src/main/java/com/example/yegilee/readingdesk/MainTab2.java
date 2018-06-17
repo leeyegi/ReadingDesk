@@ -46,6 +46,7 @@ public class MainTab2 extends Fragment{
         rootView = inflater.inflate(R.layout.activity_tab2, container, false);
 
         db=new SM_Database(getActivity());
+        db.INSERT("59:00");
 
 
         //차트 그리기 - 레이아웃과 연결
@@ -85,7 +86,7 @@ public class MainTab2 extends Fragment{
 
         final ArrayList<ReadingDesk> arReadingDesk=db.query();
 
-        for(int idx=0;idx<1;idx++){
+        for(int idx=0;idx<5;idx++){
                 String timer_data=arReadingDesk.get(idx).getTimer_data();
                 int index=timer_data.indexOf(":");
                 timer_data=timer_data.substring(0,index);

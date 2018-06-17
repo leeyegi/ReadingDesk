@@ -308,7 +308,7 @@ public class MainActivity extends AppCompatActivity {
             Log.e("str_stop", String.valueOf(str_stop));
 
             if(str_stop){
-                //((MainTab1)MainTab1.mContext).pause_timer();
+                ((MainTab1)MainTab1.mContext).pause_timer();
             }
 
         }

@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+//로딩화면 - 3초 후에 엑티비티 넘어감
 public class LoadingActivity extends Activity {
 
     @Override
@@ -25,6 +26,7 @@ public class LoadingActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading);
 
+        //handler을 통해 3초후에 메인 엑티비티로 넘어감
         @SuppressLint("HandlerLeak") Handler mhandler = new Handler()
         {
             @Override

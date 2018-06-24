@@ -5,10 +5,8 @@
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-
-    <!-- Boot 될때 Booting 완료 방송(브로드캐스트)을 듣도록 퍼미션 획득 -->
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-
+<!--
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />-->
     <application
         android:allowBackup="true"
         android:icon="@drawable/icon2"
@@ -28,7 +26,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+<!--
         <receiver
             android:name=".StartReceiver"
             android:enabled="true"
@@ -38,7 +36,7 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-
+-->
     </application>
 
 </manifest>

@@ -11,24 +11,24 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class SM_Database {
+public class SM_Database2 {
 
     DatabaseHelper mHelper;
 
     //database name
-    private static final String DATABASE_NAME = "ReadingDesk.db";
+    private static final String DATABASE_NAME = "ReadingDesk2.db";
 
     Context mContext=null;
 
     //table 1 name and field
-    private static final String DATABASE_TABLE_NAME = "readingdesk";
+    private static final String DATABASE_TABLE_NAME = "readingdesk2";
     public static final String COLUMN_NAME_ID = "id";
-    public static final String COLUMN_NAME_HHMMSS = "hhmmss";
+    public static final String COLUMN_NAME_DATA = "data";
     public static final String COLUMN_NAME_TIME="time";
     public static final String COLUMN_NAME_DATE = "date";
 
 
-    public SM_Database(Context context)
+    public SM_Database2(Context context)
     {
         mHelper = new DatabaseHelper(context);
     }
@@ -52,18 +52,18 @@ public class SM_Database {
     /*
      * Insert new record to database
      */
-    public void INSERT(String hhmmss)
+    public void INSERT(String data)
     {
         currentDataTime();
 
-        Log.e("Insert",hhmmss);
+        Log.e("Insert",data);
         Log.e("Insert",time_val);
         Log.e("Insert",date_val);
 
         StringBuffer sb = new StringBuffer();
         sb.append("INSERT INTO ").append(DATABASE_TABLE_NAME).append(" VALUES ");
         sb.append("(").append("null").append(", ");
-        sb.append("'").append(hhmmss).append("', ");
+        sb.append("'").append(data).append("', ");
         sb.append("'").append(date_val).append("', ");
         sb.append("'").append(time_val).append("'");
         sb.append("); ");
@@ -122,17 +122,17 @@ public class SM_Database {
         Cursor cursor;
 
         StringBuffer sb = new StringBuffer();
-        sb.append("SELECT * FROM ").append(DATABASE_TABLE_NAME).append(" ORDER BY id DESC LIMIT 5");
+        sb.append("SELECT * FROM ").append(DATABASE_TABLE_NAME).append(" ORDER BY id DESC LIMIT 10");
 
         cursor = db.rawQuery(sb.toString(), null);
 
         while (cursor.moveToNext()) {
             String id = cursor.getString(0);
-            String hhmmss = cursor.getString(1);
+            String data = cursor.getString(1);
             String date=cursor.getString(2);
             String time = cursor.getString(3);
 
-            list.add(new ReadingDesk(Integer.parseInt(id), hhmmss, date, time));
+            list.add(new ReadingDesk(Integer.parseInt(id), data, date, time));
         }
 
         cursor.close();
@@ -167,12 +167,10 @@ public class SM_Database {
 
             db.execSQL("CREATE TABLE IF NOT EXISTS " + DATABASE_TABLE_NAME + " ("
                     + COLUMN_NAME_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                    + COLUMN_NAME_HHMMSS + " TEXT,"
+                    + COLUMN_NAME_DATA + " TEXT,"
                     + COLUMN_NAME_DATE + " TEXT,"
                     +COLUMN_NAME_TIME+ " TEXT"
                     + ");");
-
-
         }
 
 

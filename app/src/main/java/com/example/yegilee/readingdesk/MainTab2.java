@@ -23,14 +23,12 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 
+//메인 엑티비티에 tab2
 public class MainTab2 extends Fragment{
-
 
     View rootView;
 
-    //차트 그리기 - 변수 선언
-    //LineChart linechart;
-
+    //주간 공부시간을 확인하기 위한 barchart
     BarChart barchart;
     ArrayList<BarEntry> barEntries;
     ArrayList<String> barEntityLabels;
@@ -41,12 +39,10 @@ public class MainTab2 extends Fragment{
     private ReadingDesk mReadingDesk;
 
 
-
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.activity_tab2, container, false);
 
         db=new SM_Database(getActivity());
-        db.INSERT("59:00");
 
 
         //차트 그리기 - 레이아웃과 연결
@@ -56,6 +52,7 @@ public class MainTab2 extends Fragment{
         barchart = (BarChart) rootView.findViewById(R.id.barchart);
         //HorizontalBarChart barChart = (HorizontalBarChart) findViewById(R.id.barchart);
         drawBarchart();
+
 
         return rootView;
     }
@@ -81,19 +78,45 @@ public class MainTab2 extends Fragment{
     }
 
 
+    String timer_data;
+
+    public String findStudyTime(String timer_data){
+        int timer_int=0;
+
+        String split[]=timer_data.split(":");
+        for(int i=0;i<split.length;i++){
+            //Log.e("split",split[i]);
+        }
+        //Log.e("length",String.valueOf(split.length));
+
+        if(split.length==2){
+            timer_int=Integer.parseInt(split[0]);
+        }else if(split.length==3){
+            timer_int=Integer.parseInt(split[0])*60;
+            timer_int+=Integer.parseInt(split[1]);
+        }
+
+        Log.e("time",String.valueOf(timer_int));
+
+        return String.valueOf(timer_int);
+    }
 
     public void AddValuesToBarDataLabel(){
 
         final ArrayList<ReadingDesk> arReadingDesk=db.query();
 
         for(int idx=0;idx<5;idx++){
-                String timer_data=arReadingDesk.get(idx).getTimer_data();
-                int index=timer_data.indexOf(":");
-                timer_data=timer_data.substring(0,index);
-                Log.e("a",timer_data);
-                barEntries.add(new BarEntry(Float.parseFloat(timer_data), idx));
-                barEntityLabels.add(arReadingDesk.get(idx).getTime());
+            timer_data=arReadingDesk.get(idx).getHhmmss();
+            Log.e("timerdata",timer_data);
+
+            String timer_str=findStudyTime(timer_data);
+
+            barEntries.add(new BarEntry(Float.parseFloat(timer_str), 4-idx));
+            barEntityLabels.add(arReadingDesk.get(4-idx).getTime());
         }
+
+
+
 
         /*
         barEntries.add(new BarEntry(2f, 0));
@@ -112,8 +135,6 @@ public class MainTab2 extends Fragment{
         */
 
     }
-
-
 
 
     //----------------------------------------------------------------------

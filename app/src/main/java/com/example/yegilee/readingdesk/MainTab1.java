@@ -1,6 +1,8 @@
 package com.example.yegilee.readingdesk;
 
+import android.content.Entity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -14,12 +16,19 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static java.lang.Boolean.TRUE;
 
+//메인 페이지에 tab1엑티비티
 public class MainTab1 extends Fragment{
 
     View rootView;
@@ -29,24 +38,35 @@ public class MainTab1 extends Fragment{
 
     public static MainTab1 mContext;
     private SM_Database db;
+    private SM_Database2 db2;
+
 
     //서비스 버튼 - 변수선언
     private Button button_service1;
     private Button button_service2;
 
+    //현재의 공부 패턴을 확인하기 위한 linechart
+    LineChart lineChart;
+    ArrayList<Entry> lineEntry;
+    ArrayList<String> lineEntityLables;
+    LineDataSet lineDataSet;
+    LineData lineData;
+
+    /*
     //조명 설정 - 변수 선언
     private Button button_onoff;
     private Button button_reading;
     private Button button_literature;
     private Button button_math;
+    */
 
     //사용시간 설정 - 변수 선언
     public TextView timeCount ;
-    Button button_start, button_pause, button_reset, button_lap ;
+    //Button button_start, button_pause, button_reset, button_lap ;
     long MillisecondTime, StartTime, TimeBuff, UpdateTime = 0L ;
     Handler handler;
     int Seconds, Minutes, MilliSeconds, Hour;
-    ListView listview_timelap ;
+    //ListView listview_timelap ;
     String[] ListElements = new String[] {  };
     List<String> ListElementsArrayList ;
     ArrayAdapter<String> adapter ;
@@ -56,6 +76,7 @@ public class MainTab1 extends Fragment{
 
         mContext=this;
         db=new SM_Database(getActivity());
+        db2=new SM_Database2(getActivity());
 
 
         //서비스 버튼 - 레이아웃과 연결
@@ -64,7 +85,10 @@ public class MainTab1 extends Fragment{
         button_service1.setOnClickListener(button_service1Listener);
         button_service2.setOnClickListener(button_service2Listener);
 
+        lineChart=(LineChart)rootView.findViewById(R.id.chart_study_pattern);
+        drawLinechart();            //메소드 호출
 
+        /*
         //조명 설정 - 레이아웃과 연결
         button_onoff=(Button) rootView.findViewById(R.id.button_onoff);
         button_reading=(Button) rootView.findViewById(R.id.button_reading);
@@ -75,7 +99,7 @@ public class MainTab1 extends Fragment{
         button_reading.setOnClickListener(button_readingListener);
         button_literature.setOnClickListener(button_literatureListner);
         button_math.setOnClickListener(button_mathListner);
-
+        */
         //사용시간 설정 - 레이아웃과 연결
         timeCount = (TextView)rootView.findViewById(R.id.timeCount);
         //listview_timelap = (ListView)rootView.findViewById(R.id.listview_timelap);
@@ -83,7 +107,7 @@ public class MainTab1 extends Fragment{
         //button_start = (Button)rootView.findViewById(R.id.button_start);
         //button_pause = (Button)rootView.findViewById(R.id.button_pause);
         //button_reset = (Button)rootView.findViewById(R.id.button_restart);
-        //button_lap = (Button)rootView.findViewById(R.id.button_lap) ;
+        //button_lap = (Button)rootView.findViewById(R.id.button_lap);
 
         //button_start.setOnClickListener(button_startListener);
         //button_pause.setOnClickListener(button_pauseListener);
@@ -102,9 +126,40 @@ public class MainTab1 extends Fragment{
 
         return rootView;
     }
+    //-------------------------------------------------------------------------------------------------------------
+
+    private void drawLinechart() {
+    lineEntry=new ArrayList<>();
+    lineEntityLables = new ArrayList<String>();
+    AddValuesToLineDataLabel();
+
+    XAxis xAxis = lineChart.getXAxis();
+    xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+    xAxis.setDrawAxisLine(true);
+    xAxis.setDrawGridLines(false);
+
+
+    lineDataSet=new LineDataSet(lineEntry, "나의 공부 패턴");
+    lineData=new LineData(lineEntityLables, lineDataSet);
+    lineDataSet.setColors(new int[] {Color.parseColor("#5be3c8"), Color.parseColor("#2ad1b0")});
+    lineChart.setData(lineData);
+    }
+
+    private void AddValuesToLineDataLabel() {
+        final ArrayList<ReadingDesk> arReadingDesk=db2.query();
+        String data;
+
+        for(int idx=0;idx<10;idx++){
+            data=arReadingDesk.get(idx).getHhmmss();
+            Log.e("timerdata",data);
+
+            lineEntry.add(new Entry(Integer.parseInt(data), 9-idx));
+            lineEntityLables.add(arReadingDesk.get(9-idx).getTime());
+        }
+    }
 
     //-------------------------------------------------------------------------------------------------------------
-    //-------------------------------------------------------------------------------------------------------------
+
 
     //서비스 버튼 - 버튼 리스너
     View.OnClickListener button_service1Listener = new View.OnClickListener() {
@@ -120,6 +175,7 @@ public class MainTab1 extends Fragment{
         }
     };
 
+    //-------------------------------------------------------------------------------------------------------------
 
     //사용시간 설정 - 버튼 리스너 메소드
     /*
@@ -234,7 +290,7 @@ public class MainTab1 extends Fragment{
 
     };
 
-
+    /*
     //조명 설정 - 버튼 리스너 메소드
     View.OnClickListener button_onoffListener = new View.OnClickListener() {
         public void onClick(View v) {
@@ -259,5 +315,5 @@ public class MainTab1 extends Fragment{
 
         }
     };
-
+    */
 }

@@ -17,35 +17,38 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="오늘의 공부 시간"
+            android:text="이번주 총 공부시간"
+            android:textSize="20dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
+            android:text="00:00:00"
+            android:textSize="30dp" />
+
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="주간 공부 시간"
             android:textSize="20dp" />
 
         <com.github.mikephil.charting.charts.BarChart
             android:id="@+id/barchart"
             android:layout_width="match_parent"
             android:layout_height="250dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="20dp"
             android:layout_marginBottom="100dp">
 
         </com.github.mikephil.charting.charts.BarChart>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="8dp"
-            android:text="주간 공부 시간"
-            android:textSize="20dp" />
-
-        <com.github.mikephil.charting.charts.LineChart
-            android:id="@+id/linechart"
-            android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:layout_marginRight="50dp">
-
-        </com.github.mikephil.charting.charts.LineChart>
-
 
 
     </LinearLayout>

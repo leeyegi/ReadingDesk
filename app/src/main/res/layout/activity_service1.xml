@@ -61,40 +61,58 @@
                 android:layout_height="wrap_content"
                 android:text="공부 꿀팁!"
                 android:layout_marginTop="20dp"
-                android:textColor="@color/colorPrimaryDark"
+                android:textColor="#616161"
                 android:textStyle="bold"
                 android:layout_marginBottom="20dp"
                 android:textSize="25dp"/>
 
             <ImageView
-                android:background="@drawable/studytip2"
+                android:background="@drawable/s1"
                 android:layout_width="330dp"
-                android:layout_height="290dp"
+                android:layout_height="330dp"
                 android:layout_marginBottom="20dp"
                 android:layout_gravity="center_horizontal"/>
             <ImageView
-                android:background="@drawable/studytip3"
+                android:background="@drawable/s2"
                 android:layout_width="330dp"
-                android:layout_height="290dp"
+                android:layout_height="330dp"
                 android:layout_marginBottom="20dp"
                 android:layout_gravity="center_horizontal"/>
             <ImageView
-                android:background="@drawable/studytip4"
+                android:background="@drawable/s3"
                 android:layout_width="330dp"
-                android:layout_height="290dp"
+                android:layout_height="330dp"
                 android:layout_marginBottom="20dp"
                 android:layout_gravity="center_horizontal"/>
             <ImageView
-                android:background="@drawable/studytip5"
+                android:background="@drawable/s4"
                 android:layout_width="330dp"
-                android:layout_height="290dp"
-                android:layout_marginBottom="100dp"
+                android:layout_height="330dp"
+                android:layout_marginBottom="20dp"
                 android:layout_gravity="center_horizontal"/>
             <ImageView
-                android:background="@drawable/studytip6"
+                android:background="@drawable/s5"
                 android:layout_width="330dp"
-                android:layout_height="420dp"
-                android:layout_marginBottom="100dp"
+                android:layout_height="330dp"
+                android:layout_marginBottom="20dp"
+                android:layout_gravity="center_horizontal"/>
+            <ImageView
+                android:background="@drawable/s6"
+                android:layout_width="330dp"
+                android:layout_height="330dp"
+                android:layout_marginBottom="20dp"
+                android:layout_gravity="center_horizontal"/>
+            <ImageView
+                android:background="@drawable/s7"
+                android:layout_width="330dp"
+                android:layout_height="330dp"
+                android:layout_marginBottom="20dp"
+                android:layout_gravity="center_horizontal"/>
+            <ImageView
+                android:background="@drawable/s8"
+                android:layout_width="330dp"
+                android:layout_height="330dp"
+                android:layout_marginBottom="50dp"
                 android:layout_gravity="center_horizontal"/>
         </LinearLayout>
 

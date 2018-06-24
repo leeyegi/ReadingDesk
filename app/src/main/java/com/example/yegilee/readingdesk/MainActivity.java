@@ -23,7 +23,7 @@ import java.io.OutputStream;
 import java.util.Set;
 import java.util.UUID;
 
-//메인페이지 클래스
+//메인엑티비티
 public class MainActivity extends AppCompatActivity {
 
     //탭 기능 - 변수선언
@@ -31,10 +31,13 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager mViewPager;
 
     public static MainActivity mContext;
+    private SM_Database db;
+    private SM_Database2 db2;
 
 
     //블루투스
     TextView mConnectionStatus;
+
 
     //블루투스가 현재 연결가능한지 판단
     private final int REQUEST_BLUETOOTH_ENABLE = 2;
@@ -53,6 +56,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mContext=this;
+        db=new SM_Database(getApplicationContext());
+        db2=new SM_Database2(getApplicationContext());
+
 
         //탭 기능
         mSectionsPagerAdapter = new PagerAdapter(getSupportFragmentManager());
@@ -73,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
         mMessageListview.setAdapter(mConversationArrayAdapter);
 
 
-
         Log.d( TAG, "Initalizing Bluetooth adapter...");
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (mBluetoothAdapter == null) {
@@ -90,8 +95,6 @@ public class MainActivity extends AppCompatActivity {
 
             showPairedDevicesListDialog();
         }
-
-
     }
 
     //----------------------------------------------------------------------------
@@ -116,10 +119,8 @@ public class MainActivity extends AppCompatActivity {
         private BluetoothSocket mBluetoothSocket = null;
         private BluetoothDevice mBluetoothDevice = null;
 
-
         //생성자 메소드
         ConnectTask(BluetoothDevice bluetoothDevice) {
-
 
             mBluetoothDevice = bluetoothDevice;
             mConnectedDeviceName = bluetoothDevice.getName();
@@ -293,23 +294,42 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onProgressUpdate(String... recvMessage) {
             mConversationArrayAdapter.insert(mConnectedDeviceName + ": " + recvMessage[0], 0);
+
+            int search;
+            String search_data="";
             //받은 메세지로 타이머 상태 결정
             Toast.makeText(getApplicationContext(), recvMessage[0], Toast.LENGTH_LONG).show();
             Log.e("text", recvMessage[0]);
 
+            //받은 메세지가 go이면 공부 집중중
             boolean str_go=recvMessage[0].contains("go");
-            Log.e("str_go", String.valueOf(str_go));
+            //Log.e("str_go", String.valueOf(str_go));
 
             if(str_go){
-                ((MainTab1)MainTab1.mContext).start_timer();
+                //((MainTab1)MainTab1.mContext).start_timer();
+                search=recvMessage[0].indexOf("go.");
+                search_data=recvMessage[0].substring(search+3, search+13);
+                search_data=search_data.trim();
+                int tmp=Integer.parseInt(search_data);
+                tmp=tmp/(200*200);
+                search_data=String.valueOf(tmp);
+                Log.e("search",search_data);
+
             }
 
+            //받은 메세지가 stop이면 공부 집중력 떨어짐
             boolean str_stop=recvMessage[0].contains("stop");
-            Log.e("str_stop", String.valueOf(str_stop));
+            //Log.e("str_stop", String.valueOf(str_stop));
 
             if(str_stop){
-                ((MainTab1)MainTab1.mContext).pause_timer();
+                //((MainTab1)MainTab1.mContext).pause_timer();
+                search=recvMessage[0].indexOf("op.");
+                search_data=recvMessage[0].substring(search+3, search+13);
+                search_data=search_data.trim();
+                Log.e("search",search_data);
+                search_data="0";
             }
+            db2.INSERT(search_data);
 
         }
 
@@ -319,7 +339,6 @@ public class MainActivity extends AppCompatActivity {
             super.onPostExecute(isSucess);
 
             if ( !isSucess ) {
-
 
                 closeSocket();
                 Log.d(TAG, "Device connection was lost");
@@ -378,7 +397,7 @@ public class MainActivity extends AppCompatActivity {
         Set<BluetoothDevice> devices = mBluetoothAdapter.getBondedDevices();
         final BluetoothDevice[] pairedDevices = devices.toArray(new BluetoothDevice[0]);
 
-        Log.e("connection","log1 ");
+        //Log.e("connection","log1 ");
 
 
         if ( pairedDevices.length == 0 ){
@@ -467,7 +486,6 @@ public class MainActivity extends AppCompatActivity {
             }
             if(resultCode == RESULT_CANCELED){
                 showQuitDialog( "You need to enable bluetooth");
-
 
             }
         }

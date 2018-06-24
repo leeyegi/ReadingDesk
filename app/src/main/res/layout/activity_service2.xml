@@ -61,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:text="시험공부 팁!"
                 android:layout_marginTop="10dp"
-                android:textColor="@color/colorPrimaryDark"
+                android:textColor="#616161"
                 android:textStyle="bold"
                 android:layout_marginBottom="20dp"
                 android:textSize="25dp"/>

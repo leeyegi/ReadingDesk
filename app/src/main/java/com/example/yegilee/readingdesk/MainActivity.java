@@ -312,6 +312,9 @@ public class MainActivity extends AppCompatActivity {
                 search_data=search_data.trim();
                 int tmp=Integer.parseInt(search_data);
                 tmp=tmp/(200*200);
+                if(tmp>10){
+                    tmp=10;
+                }
                 search_data=String.valueOf(tmp);
                 Log.e("search",search_data);
 

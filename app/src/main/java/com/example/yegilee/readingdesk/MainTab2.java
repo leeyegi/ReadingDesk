@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
@@ -21,7 +22,9 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 //메인 엑티비티에 tab2
 public class MainTab2 extends Fragment{
@@ -35,8 +38,11 @@ public class MainTab2 extends Fragment{
     BarDataSet barDataSet;
     BarData barData;
 
+    TextView total_time;
+    TextView today_date;
     private SM_Database db;
     private ReadingDesk mReadingDesk;
+
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -53,8 +59,57 @@ public class MainTab2 extends Fragment{
         //HorizontalBarChart barChart = (HorizontalBarChart) findViewById(R.id.barchart);
         drawBarchart();
 
+        //오늘 날짜를 표시
 
+        long time_tmp = System.currentTimeMillis();
+        SimpleDateFormat day = new SimpleDateFormat("yy-MM-dd");
+        String date_val = day.format(new Date(time_tmp));
+
+        today_date=(TextView)rootView.findViewById(R.id.today_date);
+        today_date.setText(date_val);
+
+
+        total_time=(TextView)rootView.findViewById(R.id.total_time_today);
+        total_time.setText("00:00:00");
+        totalTodayStudy();
         return rootView;
+    }
+
+    public void totalTodayStudy(){
+        int arg[]={0,0,0};
+        long time_tmp = System.currentTimeMillis();
+        SimpleDateFormat day = new SimpleDateFormat("yy-MM-dd");
+        String date_val = day.format(new Date(time_tmp));
+        final ArrayList<ReadingDesk> arReadingDesk=db.query(date_val);
+
+        for (int i=0;i<arReadingDesk.size();i++){
+            Log.e("size", String.valueOf(i));
+            String tmp=arReadingDesk.get(i).getHhmmss();
+            String split[]=tmp.split(":");
+
+            if(split.length==2){
+                arg[1]+=Integer.parseInt(split[0]);
+                arg[2]+=Integer.parseInt(split[1]);
+            }else if(split.length==3){
+                arg[0]+=Integer.parseInt(split[0]);
+                arg[1]+=Integer.parseInt(split[1]);
+                arg[2]+=Integer.parseInt(split[2]);
+            }
+        }
+
+        if(arg[2]/60!=0){
+            arg[1]+=arg[2]/60;
+            arg[2]=arg[2]%60;
+        }
+        if(arg[1]/60!=0){
+            arg[0]+=arg[1]/60;
+            arg[1]=arg[1]%60;
+        }
+        Log.e("arg[0]",String.valueOf(arg[0]));
+        Log.e("arg[1]",String.valueOf(arg[1]));
+        Log.e("arg[2]",String.valueOf(arg[2]));
+
+        total_time.setText(String.valueOf(arg[0])+":"+String.valueOf(arg[1])+":"+String.valueOf(arg[2]));
     }
 
     //차트 그리기 - 메소드
@@ -102,8 +157,12 @@ public class MainTab2 extends Fragment{
     }
 
     public void AddValuesToBarDataLabel(){
+        long time_tmp = System.currentTimeMillis();
+        SimpleDateFormat day = new SimpleDateFormat("yy-MM-dd");
+        String date_val = day.format(new Date(time_tmp));
 
-        final ArrayList<ReadingDesk> arReadingDesk=db.query();
+        final ArrayList<ReadingDesk> arReadingDesk=db.query(date_val);
+
 
         for(int idx=0;idx<5;idx++){
             timer_data=arReadingDesk.get(idx).getHhmmss();
@@ -113,10 +172,8 @@ public class MainTab2 extends Fragment{
 
             barEntries.add(new BarEntry(Float.parseFloat(timer_str), 4-idx));
             barEntityLabels.add(arReadingDesk.get(4-idx).getTime());
+
         }
-
-
-
 
         /*
         barEntries.add(new BarEntry(2f, 0));

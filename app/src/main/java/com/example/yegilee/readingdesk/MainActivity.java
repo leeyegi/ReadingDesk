@@ -154,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
                 // successful connection or an exception
                 mBluetoothSocket.connect();
 
-                Log.e("connection","log ");
+                //Log.e("connection","log ");
 
                 //블루투스가 연결이 되면 timer가 올라감
                 Log.e("connect check","connect ok");
@@ -273,7 +273,7 @@ public class MainActivity extends AppCompatActivity {
 
                                     readBufferPosition = 0;
 
-                                    Log.e(TAG, "recv message: " + recvMessage);
+                                    //Log.e(TAG, "recv message: " + recvMessage);
                                     publishProgress(recvMessage);
                                 } else {
                                     readBuffer[readBufferPosition++] = b;
@@ -311,12 +311,13 @@ public class MainActivity extends AppCompatActivity {
                 search_data=recvMessage[0].substring(search+3, search+13);
                 search_data=search_data.trim();
                 int tmp=Integer.parseInt(search_data);
-                tmp=tmp/(200*200);
+                tmp=tmp/(200*200*3);
                 if(tmp>10){
                     tmp=10;
                 }
                 search_data=String.valueOf(tmp);
                 Log.e("search",search_data);
+                db2.INSERT(search_data);
 
             }
 
@@ -331,8 +332,10 @@ public class MainActivity extends AppCompatActivity {
                 search_data=search_data.trim();
                 Log.e("search",search_data);
                 search_data="0";
+                db2.INSERT(search_data);
+
             }
-            db2.INSERT(search_data);
+            ((MainTab1)MainTab1.mContext).drawLinechart();
 
         }
 

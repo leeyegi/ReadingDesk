@@ -128,7 +128,7 @@ public class MainTab1 extends Fragment{
     }
     //-------------------------------------------------------------------------------------------------------------
 
-    private void drawLinechart() {
+    public void drawLinechart() {
     lineEntry=new ArrayList<>();
     lineEntityLables = new ArrayList<String>();
     AddValuesToLineDataLabel();
@@ -149,12 +149,13 @@ public class MainTab1 extends Fragment{
         final ArrayList<ReadingDesk> arReadingDesk=db2.query();
         String data;
 
-        for(int idx=0;idx<10;idx++){
-            data=arReadingDesk.get(idx).getHhmmss();
-            Log.e("timerdata",data);
 
-            lineEntry.add(new Entry(Integer.parseInt(data), 9-idx));
-            lineEntityLables.add(arReadingDesk.get(9-idx).getTime());
+        for(int idx=0;idx<10;idx++) {
+            data = arReadingDesk.get(idx).getHhmmss();
+            //Log.e("timerdata", data);
+
+            lineEntry.add(new Entry(Integer.parseInt(data), 9 - idx));
+            lineEntityLables.add(arReadingDesk.get(9 - idx).getTime());
         }
     }
 

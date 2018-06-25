@@ -116,13 +116,14 @@ public class SM_Database {
     /*
      * Query to get list of note in database
      */
-    public ArrayList<ReadingDesk> query() {
+    public ArrayList<ReadingDesk> query(String currentdate) {
         ArrayList<ReadingDesk> list = new ArrayList<ReadingDesk>();
         SQLiteDatabase db = mHelper.getReadableDatabase();
         Cursor cursor;
 
         StringBuffer sb = new StringBuffer();
-        sb.append("SELECT * FROM ").append(DATABASE_TABLE_NAME).append(" ORDER BY id DESC LIMIT 5");
+        sb.append("SELECT * FROM ").append(DATABASE_TABLE_NAME).append(" WHERE date='").append(currentdate).append("' ORDER BY id DESC");
+       // sb.append("SELECT * FROM ").append(DATABASE_TABLE_NAME).append(" ORDER BY id DESC");
 
         cursor = db.rawQuery(sb.toString(), null);
 

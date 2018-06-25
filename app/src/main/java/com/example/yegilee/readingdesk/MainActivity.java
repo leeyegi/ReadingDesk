@@ -30,18 +30,17 @@ public class MainActivity extends AppCompatActivity {
     private PagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
 
+    //다른 클래스의 메소드를 호출하기 위한 인스턴스
     public static MainActivity mContext;
     private SM_Database db;
     private SM_Database2 db2;
 
-
     //블루투스
     TextView mConnectionStatus;
 
-
+    //블루투스 관련 인스턴스 선언
     //블루투스가 현재 연결가능한지 판단
     private final int REQUEST_BLUETOOTH_ENABLE = 2;
-
     ConnectedTask mConnectedTask = null;                        //블루투스 연결된후 수행 클래스 객체
     static BluetoothAdapter mBluetoothAdapter;                   //현재의 상태를 알 수 있는 블루투스 어댑터
     private String mConnectedDeviceName = null;              //연결된 장치의 이름을 표시
@@ -55,7 +54,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //다른 클래스의 메소드 사용을 위한 mContext선언
         mContext=this;
+
+        //데이터베이스의 insert 와 query를 위한 코드
         db=new SM_Database(getApplicationContext());
         db2=new SM_Database2(getApplicationContext());
 
@@ -69,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.main_tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-        //블루투스
+        //블루투스 기능
         mConnectionStatus=(TextView)findViewById(R.id.connection_status_textview);
 
         ListView mMessageListview = (ListView) findViewById(R.id.message_listview);
@@ -290,6 +293,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
+        //-------------------------------------------------------------------------------------------------
         //블루투스의 통신 상태를 어댑터를 통해 업데이트하는 메소드
         @Override
         protected void onProgressUpdate(String... recvMessage) {

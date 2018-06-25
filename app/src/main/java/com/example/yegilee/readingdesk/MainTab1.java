@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -36,10 +37,10 @@ public class MainTab1 extends Fragment{
     //start와 pause를 도와줄 flag
     public int start_pause_flag=0;
 
+    //다른 클래스의 메소드를 호출시키기 위한 인스턴스
     public static MainTab1 mContext;
     private SM_Database db;
     private SM_Database2 db2;
-
 
     //서비스 버튼 - 변수선언
     private Button button_service1;
@@ -74,7 +75,10 @@ public class MainTab1 extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.activity_tab1, container, false);
 
+        //다른 클래스에서 현재 클래스를 불러오기 위한 mContext선언
         mContext=this;
+
+        //데이터베이스 삽입 및 쿼리사용을 위한 코드
         db=new SM_Database(getActivity());
         db2=new SM_Database2(getActivity());
 
@@ -100,6 +104,7 @@ public class MainTab1 extends Fragment{
         button_literature.setOnClickListener(button_literatureListner);
         button_math.setOnClickListener(button_mathListner);
         */
+
         //사용시간 설정 - 레이아웃과 연결
         timeCount = (TextView)rootView.findViewById(R.id.timeCount);
         //listview_timelap = (ListView)rootView.findViewById(R.id.listview_timelap);
@@ -128,6 +133,7 @@ public class MainTab1 extends Fragment{
     }
     //-------------------------------------------------------------------------------------------------------------
 
+    //공부의 집중도를 표시하기 위한 linechart
     public void drawLinechart() {
     lineEntry=new ArrayList<>();
     lineEntityLables = new ArrayList<String>();
@@ -138,6 +144,10 @@ public class MainTab1 extends Fragment{
     xAxis.setDrawAxisLine(true);
     xAxis.setDrawGridLines(false);
 
+    YAxis yAxis=lineChart.getAxisLeft();
+    yAxis.setAxisMinValue(0);
+    yAxis.setAxisMaxValue(10);
+
 
     lineDataSet=new LineDataSet(lineEntry, "나의 공부 패턴");
     lineData=new LineData(lineEntityLables, lineDataSet);
@@ -145,18 +155,21 @@ public class MainTab1 extends Fragment{
     lineChart.setData(lineData);
     }
 
+    //공부의 집중도를 차트에 표시하기 위한 데이터와 레이블 구성 메소드
     private void AddValuesToLineDataLabel() {
         final ArrayList<ReadingDesk> arReadingDesk=db2.query();
         String data;
-
+        int time=0;
 
         for(int idx=0;idx<10;idx++) {
             data = arReadingDesk.get(idx).getHhmmss();
             //Log.e("timerdata", data);
+            time+=10;
 
             lineEntry.add(new Entry(Integer.parseInt(data), 9 - idx));
-            lineEntityLables.add(arReadingDesk.get(9 - idx).getTime());
+            lineEntityLables.add(String.valueOf(time));
         }
+
     }
 
     //-------------------------------------------------------------------------------------------------------------
@@ -264,6 +277,7 @@ public class MainTab1 extends Fragment{
     };
 */
 
+//사용시간을 계산하기 위한 메소드
     public Runnable runnable = new Runnable() {
 
         public void run() {

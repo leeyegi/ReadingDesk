@@ -38,6 +38,8 @@ public class MainTab2 extends Fragment{
     BarDataSet barDataSet;
     BarData barData;
 
+    MainTab2 mContext;
+
     TextView total_time;
     TextView today_date;
     private SM_Database db;
@@ -48,6 +50,7 @@ public class MainTab2 extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.activity_tab2, container, false);
 
+        mContext=this;
         db=new SM_Database(getActivity());
 
 
@@ -60,7 +63,6 @@ public class MainTab2 extends Fragment{
         drawBarchart();
 
         //오늘 날짜를 표시
-
         long time_tmp = System.currentTimeMillis();
         SimpleDateFormat day = new SimpleDateFormat("yy-MM-dd");
         String date_val = day.format(new Date(time_tmp));
@@ -75,6 +77,7 @@ public class MainTab2 extends Fragment{
         return rootView;
     }
 
+    //오늘의 총 공부량을 표시 - TextView
     public void totalTodayStudy(){
         int arg[]={0,0,0};
         long time_tmp = System.currentTimeMillis();
@@ -157,6 +160,8 @@ public class MainTab2 extends Fragment{
     }
 
     public void AddValuesToBarDataLabel(){
+
+
         long time_tmp = System.currentTimeMillis();
         SimpleDateFormat day = new SimpleDateFormat("yy-MM-dd");
         String date_val = day.format(new Date(time_tmp));

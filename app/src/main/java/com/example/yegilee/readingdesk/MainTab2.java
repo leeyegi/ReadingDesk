@@ -168,16 +168,21 @@ public class MainTab2 extends Fragment{
 
         final ArrayList<ReadingDesk> arReadingDesk=db.query(date_val);
 
+        int size=arReadingDesk.size();
 
-        for(int idx=0;idx<5;idx++){
-            timer_data=arReadingDesk.get(idx).getHhmmss();
-            Log.e("timerdata",timer_data);
+        Log.e("size", String.valueOf(size));
 
-            String timer_str=findStudyTime(timer_data);
+        if(size>=0){
+        for(int idx=0;idx<size;idx++) {
+            Log.e("for ",String.valueOf(idx));
+            timer_data = arReadingDesk.get(idx).getHhmmss();
+            Log.e("timerdata", timer_data);
 
-            barEntries.add(new BarEntry(Float.parseFloat(timer_str), 4-idx));
-            barEntityLabels.add(arReadingDesk.get(4-idx).getTime());
+            String timer_str = findStudyTime(timer_data);
 
+            barEntries.add(new BarEntry(Float.parseFloat(timer_str), size-1-idx));
+            barEntityLabels.add(arReadingDesk.get(size-1-idx).getTime());
+            }
         }
 
         /*

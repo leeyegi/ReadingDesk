@@ -42,44 +42,57 @@
             android:text="나의 공부 집중도"
             android:textSize="20dp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_gravity="right"
-            android:textColor="@color/colorPrimaryDark"
-            android:text="0:집중도 높음"
-            android:layout_marginRight="3dp"
-            android:textSize="15dp" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:textColor="@color/colorPrimaryDark"
-            android:layout_gravity="right"
-            android:text="10:산만함"
-            android:layout_marginRight="3dp"
-            android:textSize="15dp" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="산만도"/>
 
-        <com.github.mikephil.charting.charts.LineChart
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="집중도"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="낮음"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="130dp"
+                    android:text="집중도"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="높음"/>
+
+
+            </LinearLayout>
+
+            <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/chart_study_pattern"
             android:layout_width="match_parent"
             android:layout_marginRight="25dp"
-            android:layout_height="250dp"
-            android:layout_marginBottom="50dp">
+            android:layout_height="250dp">
 
         </com.github.mikephil.charting.charts.LineChart>
         </LinearLayout>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:text="시간(초)"/>
         <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -105,8 +118,6 @@
             android:text="시험공부 팁!"/>
 
     </LinearLayout>
-
-
     </LinearLayout>
 
 </ScrollView>

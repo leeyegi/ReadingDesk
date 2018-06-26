@@ -53,24 +53,36 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="3dp"
+                    android:text="공부시간"/>
+
+                <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="3dp"
                 android:text="m(분)"/>
+            </LinearLayout>
 
-        <com.github.mikephil.charting.charts.BarChart
-            android:id="@+id/barchart"
-            android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:layout_marginRight="25dp"
-            android:layout_marginTop="20dp">
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/barchart"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginTop="20dp">
 
 
-        </com.github.mikephil.charting.charts.BarChart>
+            </com.github.mikephil.charting.charts.BarChart>
         </LinearLayout>
-
     </LinearLayout>
 
 </ScrollView>
